@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>画板</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
         }
-        #canvas{
+
+        #canvas {
             /* 和屏幕一样高 */
             height: 100vh;
-            border: 1px solid red ;
+            /* border: 1px solid red; */
         }
     </style>
 </head>
+
 <body>
-    <div id="canvas"></div>
+    <canvas id="canvas" width="100px" height="100px"></canvas>
     <script>
-        canvas.onclick =(e) =>{
-            console.log(e.clientX);
-            console.log(e.clientY);
-            let div = document.createElement('div');
-            div.style.position = 'absolute';
-            div.style.left = e.clientX + 'px';
-            div.style.top = e.clientY + 'px';
-            // div.style.border = '1px solid red';
-            div.style.width = '6px';
-            div.style.height = '6px';
-            div.style.marginLeft = '-3px';
-            div.style.marginTop = '-3px';
-            div.style.borderRadius = '50%';
-            div.style.backgroundColor = 'black';
-            canvas.appendChild(div);
+        let canvas = document.getElementById("canvas");
+        canvas.height = document.documentElement.clientHeight;
+        canvas.width = document.documentElement.clientWidth;
+        let ctx = canvas.getContext("2d");
+        ctx.strokeStyle = 'none';
+        ctx.fillStyle = "black";
+        let painting = false;
+        canvas.onmousedown = () => {
+            painting = true;
+        }
+        canvas.onmouseup = () => {
+            painting = false;
+        }
+        canvas.onmousemove = (e) => {
+            if (painting === true) {
+                ctx.beginPath();
+                ctx.arc(e.clientX,e.clientY,10,0,2 * (Math.PI));
+                ctx.stroke();
+                ctx.fill();
+            } else {
+
+            }
         }
     </script>
 </body>
+
 </html>
